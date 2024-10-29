@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="authoring-tool" content="Adobe_Animate_CC">
+<title>index</title>
+<script src="https://s0.2mdn.net/ads/studio/Enabler.js"></script>
+<script src="https://s0.2mdn.net/ads/studio/cached_libs/createjs_2019.11.15_min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/Draggable.min.js"></script>
+<script src="https://disxt-clients.s3.eu-central-1.amazonaws.com/plugins/ThrowPropsPlugin.min.js"></script>
+
+
+<script src="index.js"></script>
+
+<script>
+gsap.registerPlugin(Draggable);
+
+
+var canvas, stage, exportRoot;
+function init() {
+	canvas = document.getElementById("canvas");
+	var comp=AdobeAn.getComposition("B925B243DA4641B0922473B0B12760D2");
+	var lib=comp.getLibrary();
+	var loader = new createjs.LoadQueue(false);
+	loader.addEventListener("fileload", function(evt){handleFileLoad(evt,comp)});
+	loader.addEventListener("complete", function(evt){handleComplete(evt,comp)});
+	var lib=comp.getLibrary();
+	loader.loadManifest(lib.properties.manifest);
+}
+function handleFileLoad(evt, comp) {
+	var images=comp.getImages();	
+	if (evt && (evt.item.type == "image")) { images[evt.item.id] = evt.result; }	
+}
+function handleComplete(evt,comp) {
+	var lib=comp.getLibrary();
+	var ss=comp.getSpriteSheet();
+	var queue = evt.target;
+	var ssMetadata = lib.ssMetadata;
+	for(i=0; i<ssMetadata.length; i++) {
+		ss[ssMetadata[i].name] = new createjs.SpriteSheet( {"images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames} )
+	}
+	exportRoot = new lib.index();
+	stage = new lib.Stage(canvas);
+	stage.enableMouseOver();	
+	fnStartAnimation = function() {
+		stage.addChild(exportRoot);
+		createjs.Ticker.framerate = lib.properties.fps;
+		createjs.Ticker.addEventListener("tick", stage);
+	}	    
+
+	AdobeAn.makeResponsive(false,'both',false,1,[canvas]);	
+
+	AdobeAn.compositionLoaded(lib.properties.id);
+	fnStartAnimation();
+}
+</script>
+
+<style type="text/css">  
+    
+	body {
+		width: 300px;
+		height: 600px;
+		}
+	
+		
+	#canvas {
+		position: absolute;
+		}
+		
+	#banner { 
+		position: absolute;
+		overflow:hidden;
+		padding: 0;
+		margin: 0;
+		width: 300px;
+		height: 600px;
+		}
+	
+	#banner:hover {
+		cursor:pointer;
+	}
+
+	#bg {
+ 
+ width: 300px;
+ height: 600px;
+ display: block;
+ position: absolute;
+}
+#dragControl {
+  content:url('head.png');
+  width: 28px;
+  height: 52px;
+  top:-185px;
+  left:0px;
+  display: block;
+  position: absolute;
+  opacity:0;
+}
+#flag {
+ 
+  width: 78px;
+  height: 39px;
+  top:-220px;
+  left:-25px;
+  display: block;
+  position: absolute;
+  opacity:0;
+}
+
+
+
+#dragBounds {
+  width: 260px;
+  height: 52px;
+  margin: 50px auto;
+  background:none;
+  position: relative;
+  
+}
+
+#stage {
+  width: 300px;
+  margin: 10px auto;
+  height: 600px;
+  background: none;
+  position: relative;
+  overflow: hidden;
+}
+.action {
+  
+  height: 100%;
+  width: 100%;
+  float: left;
+  position: absolute;
+}
+.panelWrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  right:200%;
+  
+}
+.action0 {
+  content:url('f1.png');
+  width: 440px;
+  height: 302px;
+  display: block;
+  background: none;
+  color: white;
+  left:50%;	
+  top:150px;
+ 
+}
+.action1 {
+  content:url('f2.png');
+  width: 340px;
+  height: 173px;
+  display: block;
+  background: none;
+  color: white;
+  top:250px;
+  right: 25%;
+  
+}
+.action2 {
+	content:url('f3.png');
+  width: 300px;
+  height: 236px;
+  display: block;
+	background: none;
+  color: white;
+  top:200px;
+  right: 150%;
+ 
+}
+.action3 {
+	content:url('f4.png');
+  width: 300px;
+  height: 356px;
+  top:130px;
+  display: block;
+	background: none;
+  color: black;
+  right: 255%;
+  
+}
+
+.marker {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: black;
+  top: -20px;
+  opacity: 0;
+}
+
+.marker1 {
+  left: 50px;
+}
+.marker2 {
+  left: 150px;
+}
+.marker3 {
+  left: 250px;
+}
+.marker4 {
+  left: 350px;
+}
+#twins {
+ 
+ width: 24px;
+ height: 29px;
+ top:95px;
+ left:255px;
+ display: block;
+ position: absolute;
+}
+#arrowImg {
+ 
+ width: 25px;
+ height: 14px;
+ top:503px;
+ left:98px;
+ display: block;
+ position: absolute;
+}
+#text {
+ 
+ width: 266px;
+ height: 65px;
+ top:-65px;
+ left:18px;
+ display: block;
+ position: absolute;
+}
+#text0 {
+ 
+ width: 214px;
+ height: 65px;
+ top:-65px;
+ left:43px;
+ display: block;
+ position: absolute;
+}
+
+	</style>
+</head>
+<body onload="init();" style="margin:0px;">
+	<div id="bg"><img id="bgImg" src="background.jpg" width="300" height="600"></div>
+	<a id="banner">
+    <div id="banner">
+		<canvas id="canvas" width="300" height="600" style="display: block;"></canvas>
+	</div>
+	<div id="stage">
+		<div class="panelWrap">
+		<div class="action action0">
+		
+		</div>
+		<div class="action action1">
+
+		</div>
+		<div class="action action2">
+		
+		</div>
+		<div class="action action3">
+
+		</div>
+		</div>
+		</div>
+		<div id="dragBounds">
+		<div class="marker marker1"></div>
+		<div class="marker marker2"></div>
+		<div class="marker marker3"></div>
+		<div class="marker marker4"></div>
+		<div id="dragControl"></div>
+		<div id="flag"><img id="flagImg" src="flag.png" width="78" height="39"></div>
+		
+		</div>
+		<div id="text0"><img id="textImg0" src="t0.png" width="214" height="65"></div>
+		<div id="text"><img id="textImg" src="t1.png" width="266" height="65"></div>
+		<div id="twins"><img id="twinImg" src="twins.png" width="24" height="29"></div>
+		<div id="arrow"><img id="arrowImg" src="arrow.png" width="25" height="14"></div>
+
+</body>
+<script>
+
+
+var dragStop = document.getElementById("dragBounds");
+var snapStops = [0, 100, 200, 300];
+
+Draggable.create("#dragControl", {
+  type: "x",
+  bounds: {width:240, minX:0, maxX:240},
+  edgeResistance: 1,
+  snap: snapStops,
+  throwProps:true,
+  onPress:function(){
+	  this.rot = -15;
+  },
+  onDrag: makeEmMove,
+  onDragEnd:positionDrag,
+  onThrowUpdate: makeEmMove
+});
+gsap.delayedCall(0.5, moveShit);
+gsap.set([document.getElementById("twins"),document.getElementById("arrowImg")], {opacity:0}); 
+gsap.to('#arrowImg', {duration:0.2, opacity:1, delay:0.5});
+gsap.to('#arrowImg', {duration:0.5, x:"+=5", yoyo:true, repeat:28});
+function moveShit(){
+
+gsap.to(".panelWrap", {duration:0.6, right:"62%", ease:"expo.out"});
+gsap.to("#dragControl", {duration:0.6, x:40, ease:"expo.out"});
+gsap.to("#flag", {duration:0.6, x:40, ease:"expo.out"});
+gsap.to(document.getElementById("text0"), {duration:0.5, top:"30px", ease:"expo.out"});
+gsap.to([document.getElementById("dragControl"), document.getElementById("flag")], {duration:0.25, opacity:1});
+gsap.to(document.getElementById("text0"), {duration:0.5, top:"-70px", ease:"expo.out", delay:2});
+gsap.to(document.getElementById("text"), {duration:0.5, top:"30px", ease:"expo.out", delay:2.3});
+
+}
+//throwprops
+function positionDrag(e){
+	
+	gsap.to("#dragControl", {duration:0.3, rotation:0, ease:"expo.out"});
+	if (this.x >=0 && this.x <=20){
+		console.log("little")
+		gsap.to("#dragControl", {x: 40, duration:0.2, onComplete:function(){
+			gsap.to(".panelWrap", { x: 0, duration:0.3});
+			gsap.to("#flag", { x: 40 , duration:0.3});
+		}});
+		gsap.to(document.getElementById("text"), {duration:0.5, top:"-70px", ease:"expo.out", onComplete:function(){
+
+			document.getElementById("textImg").src = "t1.png";
+		}});
+		gsap.to(document.getElementById("text"), {duration:0.5, top:"30px", ease:"expo.out", delay:0.5});
+		document.getElementById("flagImg").src = "flag.png";
+		
+		
+	}
+	if (this.x >20 && this.x <=40){
+		console.log("little")
+		gsap.to("#dragControl", {x: 40, duration:0.2, onComplete:function(){
+			gsap.to(".panelWrap", { x: 0 , duration:0.3});
+			gsap.to("#flag", { x: 40 , duration:0.3});
+		}});
+		document.getElementById("flagImg").src = "flag.png";
+		gsap.to(document.getElementById("text"), {duration:0.5, top:"-70px", ease:"expo.out", onComplete:function(){
+
+document.getElementById("textImg").src = "t1.png";
+}});
+gsap.to(document.getElementById("text"), {duration:0.5, top:"30px", ease:"expo.out", delay:0.5});
+		
+	}
+	if (this.x >=40 && this.x <=65){
+		
+		gsap.to("#dragControl", {x: 40, duration:0.5});
+		gsap.to("#dragControl", {x: 40, duration:0.2, onComplete:function(){
+			gsap.to(".panelWrap", { x: 0 , duration:0.3});
+			gsap.to("#flag", { x: 40 , duration:0.3});
+		}});
+		document.getElementById("flagImg").src = "flag.png";
+		gsap.to(document.getElementById("text"), {duration:0.5, top:"-70px", ease:"expo.out", onComplete:function(){
+
+document.getElementById("textImg").src = "t1.png";
+}});
+gsap.to(document.getElementById("text"), {duration:0.5, top:"30px", ease:"expo.out", delay:0.5});
+		
+	}
+	if (this.x >65 && this.x <=90){
+	
+		gsap.to("#dragControl", {x: 90, duration:0.2, onComplete:function(){
+			gsap.to(".panelWrap", { x: 305 , duration:0.3});
+			gsap.to("#flag", { x: 90 , duration:0.3});
+		}});
+		document.getElementById("flagImg").src = "flag2.png";
+		gsap.to(document.getElementById("text"), {duration:0.5, top:"-70px", ease:"expo.out", onComplete:function(){
+
+document.getElementById("textImg").src = "t2.png";
+}});
+gsap.to(document.getElementById("text"), {duration:0.5, top:"30px", ease:"expo.out", delay:0.5});
+		
+	}
+	if (this.x >90 && this.x <=115){
+		
+		gsap.to("#dragControl", {x: 90, duration:0.2, onComplete:function(){
+			gsap.to(".panelWrap", { x: 305 , duration:0.3});
+			gsap.to("#flag", { x: 90 , duration:0.3});
+		}});
+		document.getElementById("flagImg").src = "flag2.png";
+		gsap.to(document.getElementById("text"), {duration:0.5, top:"-70px", ease:"expo.out", onComplete:function(){
+
+document.getElementById("textImg").src = "t2.png";
+}});
+gsap.to(document.getElementById("text"), {duration:0.5, top:"30px", ease:"expo.out", delay:0.5});
+		
+	}
+	if (this.x >115 && this.x <=140){
+		
+		gsap.to("#dragControl", {x: 140, duration:0.2, onComplete:function(){
+			gsap.to(".panelWrap", { x: 639 , duration:0.3});
+			gsap.to("#flag", { x: 140 , duration:0.3});
+		}});
+		document.getElementById("flagImg").src = "flag3.png";
+		gsap.to(document.getElementById("text"), {duration:0.5, top:"-70px", ease:"expo.out", onComplete:function(){
+
+document.getElementById("textImg").src = "t3.png";
+}});
+gsap.to(document.getElementById("text"), {duration:0.5, top:"30px", ease:"expo.out", delay:0.5});
+		
+	}
+	if (this.x >140 && this.x <=165){
+	
+		gsap.to("#dragControl", {x: 140, duration:0.2, onComplete:function(){
+			gsap.to(".panelWrap", { x: 639 , duration:0.3});
+			gsap.to("#flag", { x: 140 , duration:0.3});
+		}});
+		document.getElementById("flagImg").src = "flag3.png";
+		gsap.to(document.getElementById("text"), {duration:0.5, top:"-70px", ease:"expo.out", onComplete:function(){
+
+document.getElementById("textImg").src = "t3.png";
+}});
+gsap.to(document.getElementById("text"), {duration:0.5, top:"30px", ease:"expo.out", delay:0.5});
+		
+	}
+	if (this.x >165 && this.x <=190){
+
+		gsap.to("#dragControl", {x: 190, duration:0.2, onComplete:function(){
+			gsap.to(".panelWrap", { x: 954 , duration:0.3});
+			gsap.to("#flag", { x: 190 , duration:0.3});
+		}});
+		document.getElementById("flagImg").src = "flag4.png";
+		gsap.to(document.getElementById("text"), {duration:0.5, top:"-70px", ease:"expo.out", onComplete:function(){
+
+document.getElementById("textImg").src = "t4.png";
+}});
+gsap.to(document.getElementById("text"), {duration:0.5, top:"30px", ease:"expo.out", delay:0.5});
+		
+	}
+	if (this.x >190 ){
+		gsap.to("#dragControl", {x: 190, duration:0.2, onComplete:function(){
+			gsap.to(".panelWrap", { x: 954 , duration:0.3});
+			gsap.to("#flag", { x: 190 , duration:0.3});
+		}});
+		document.getElementById("flagImg").src = "flag4.png";
+		gsap.to(document.getElementById("text"), {duration:0.5, top:"-70px", ease:"expo.out", onComplete:function(){
+
+document.getElementById("textImg").src = "t4.png";
+}});
+gsap.to(document.getElementById("text"), {duration:0.5, top:"30px", ease:"expo.out", delay:0.5});
+		
+	}
+	
+}
+
+var xDirection = "";
+var oldX = 0;
+function makeEmMove(e) {
+	gsap.to('#arrowImg', {duration:0.15, opacity:0});
+	if (oldX < e.pageX) {
+		gsap.to("#dragControl", {duration:0.3, rotation:-15, ease:"expo.out"});
+    } else {
+		gsap.to("#dragControl", {duration:0.3, rotation:15, ease:"expo.out"});
+    }
+ 
+    oldX = e.pageX;
+    
+gsap.set(document.getElementById("flag"), { x: this.x });
+
+if (this.x >170){
+	
+	gsap.to(document.getElementById("twins"), {duration:0.2, opacity:1});
+}
+else {
+	
+	gsap.to(document.getElementById("twins"), {duration:0.2, opacity:0});
+}
+
+
+}
+
+
+	</script>
+</html>
